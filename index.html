@@ -68,6 +68,7 @@
       downloadLink.href = exportWAV(audioData);
       downloadLink.download = 'recorded.wav';
       downloadLink.click();
+      document.getElementById( 'sound-file' ).pause() ;
     }
 
     // export WAV from audio float data
