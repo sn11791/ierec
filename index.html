@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <!-- これは消す！ -->
+  <!-- responsive2で音質トライ -->
   <title>おうち REC</title>
-  <meta name="viewport" content="width=device-width" >
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -20,14 +21,44 @@
     .btns{
       padding: 10px;
     }
-    #title_title{
-      font-weight: bold;
-      font-size: 20px;
+    @media screen and (min-width:480px) {
+      #title_title{
+        font-weight: bold;
+        font-size: 70px;
+      }
+      #mikeon, #start2, #stop {
+        margin-bottom: 20px;
+        font-size: 70px;
+      }
     }
-
+    @media screen and (min-width:490px) and ( max-width:1024px) {
+      #title_title{
+        font-weight: bold;
+        font-size: 30px;
+      }
+      #mikeon, #start2, #stop {
+        margin-bottom: 20px;
+        font-size: 20px;
+      }
+    }
+    @media screen and (min-width:1024px) {
+      #title_title{
+        font-weight: bold;
+        font-size: 30px;
+      }
+      #mikeon, #start2, #stop {
+        margin-bottom: 20px;
+        font-size: 20px;
+      }
+    }
+    /* #title_title{
+      font-weight: bold;
+      font-size: 70px;
+    }
     #mikeon, #start2, #stop {
       margin-bottom: 20px;
-    }
+      font-size: 70px;
+    } */
 
   </style>
 </head>
@@ -64,6 +95,7 @@
     // audio data
     let audioData = [];
     let bufferSize = 1024;
+
     let saveAudio = function () {
       downloadLink.href = exportWAV(audioData);
       downloadLink.download = 'recorded.wav';
@@ -173,9 +205,30 @@
       mediastreamsource.connect(scriptProcessor);
     };
 
+    // const constraints = {
+    //   audio: {
+    //     sampleRate: 48000,
+    //     channelCount: 1,
+    //     volume: 1.0,
+    //     echoCancellation: true,
+    //     noiseSuppression: true,
+    //   },
+    //   video: false
+    // }
+    const constraints = {
+      audio: {
+        echoCancellation: false,
+        noiseSuppression: false,
+        autoGainControl: false,
+      },
+      video: false
+    }
+
 
     mikeonButton.addEventListener('click', function () {
-      navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+      // navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+      //   .then(handleSuccess);
+      navigator.mediaDevices.getUserMedia(constraints)
         .then(handleSuccess);
       console.log('started wav');
 
